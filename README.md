@@ -46,7 +46,7 @@ The extension also sets a platform-appropriate `BROWSER` environment variable (`
 
 ## Configuration
 
-The extension is scaffolded with a small settings surface:
+The extension exposes a small settings surface:
 
 ```json
 {

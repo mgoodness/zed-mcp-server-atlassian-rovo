@@ -6,6 +6,8 @@ This repository uses a single-context documentation layout.
 
 - Root context: `CONTEXT.md`
 - ADR directory: `docs/adr/`
+- User documentation: `README.md`
+- Operational docs: `docs/release-checklist.md`, `docs/testing/local-dev.md`
 
 ## Consumer rules for agent skills
 
@@ -13,8 +15,8 @@ Skills that need domain context should:
 
 1. Read `CONTEXT.md` at the repo root first, if present.
 2. Then read relevant ADRs under `docs/adr/`.
-3. Prefer existing domain language and decisions from those docs over inventing new terminology.
-4. If those files do not exist yet, proceed carefully and note that domain context has not been established.
+3. For operational tasks (testing, releasing, smoke-testing), also consult `docs/release-checklist.md` and `docs/testing/local-dev.md`.
+4. Prefer existing domain language and decisions from those docs over inventing new terminology.
 
 ## Notes
 
