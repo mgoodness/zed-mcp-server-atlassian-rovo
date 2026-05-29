@@ -1,0 +1,10 @@
+id = "atlassian-rovo-mcp-server"
+name = "Atlassian Rovo MCP Server"
+version = "0.0.1"
+schema_version = 1
+authors = ["Michael Goodness <mike@opsgoodness.net>c"]
+description = "A thin Zed extension that connects Zed to Atlassian's hosted Rovo MCP server via mcp-remote."
+repository = "https://github.com/mgoodness/zed-mcp-server-atlassian-rovo"
+
+[context_servers.atlassian-rovo]
+name = "Atlassian Rovo"
