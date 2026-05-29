@@ -740,7 +740,7 @@ dependencies = [
 
 [[package]]
 name = "zed-mcp-server-atlassian-rovo"
-version = "0.0.1"
+version = "0.1.0"
 dependencies = [
  "serde",
  "zed_extension_api",
