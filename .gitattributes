@@ -1,0 +1,4 @@
+# Exclude developer documentation from git archive / extension packaging
+docs/       export-ignore
+CONTEXT.md  export-ignore
+AGENTS.md   export-ignore
