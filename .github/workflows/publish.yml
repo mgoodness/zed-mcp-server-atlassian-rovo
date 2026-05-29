@@ -1,8 +1,7 @@
 on:
-  push:
-    tags:
-      - "v*"
-  workflow_dispatch: 
+  release:
+    types: [published]
+  workflow_dispatch:
 
 jobs:
   publish:
@@ -13,6 +12,5 @@ jobs:
         with:
           extension-name: atlassian-rovo-mcp-server
           push-to: mgoodness/zed-extensions
-          tag: v0.1.0
         env:
           COMMITTER_TOKEN: ${{ secrets.ZED_EXTENSIONS_TOKEN }}
