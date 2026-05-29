@@ -3,7 +3,7 @@
 ## Project
 
 - Name: `zed-mcp-server-atlassian-rovo`
-- Status: scaffolding stage; no implementation has been committed yet
+- Status: v0.1.0 released; initial implementation complete
 
 ## Purpose
 
@@ -47,7 +47,7 @@ For V1, the primary supported workflows are Jira and Confluence. Other Rovo-expo
 
 ## System boundaries
 
-This section describes the intended responsibilities of this repo based on the project name and external Atlassian/Zed documentation. The current repository does not yet contain implementation code.
+This section describes the responsibilities of this repo as implemented in v0.1.0.
 
 ### In scope
 
@@ -67,7 +67,7 @@ This section describes the intended responsibilities of this repo based on the p
 
 ## Architecture notes
 
-The codebase is currently empty, but the project shape has been chosen in `docs/adr/0001-project-shape.md`.
+The project shape is captured in `docs/adr/0001-project-shape.md`. The v0.1.0 implementation lives in `src/lib.rs` (~208 lines of Rust compiled to `wasm32-wasip2`).
 
 ### Chosen structure
 
@@ -99,6 +99,15 @@ The intended architecture has three layers:
 - **Atlassian boundary** — remote hosted MCP service and Atlassian Cloud products
 - **Authentication boundary** — browser/token flow and any locally cached credentials
 
+### Key implementation details (src/lib.rs)
+
+- **AtlassianRovoSettings** — user-configurable struct with two fields:
+  - `endpoint` (default: `https://mcp.atlassian.com/v1/mcp/authv2`)
+  - `proxy_package` (default: `mcp-remote@0.1.37`)
+- **Auto-install** — `install_proxy_package_if_needed()` uses Zed's npm API to install the proxy package into a local `node_modules` on first use, avoiding global npm installs
+- **Platform env** — `BROWSER` is set to `open` on macOS and `xdg-open` on Linux so the OAuth browser flow works without user configuration
+- **Compile target** — the crate is a `cdylib` that compiles to `wasm32-wasip2` for Zed's WebAssembly extension runtime
+
 ## Source of truth
 
 Record where important decisions or facts live.
@@ -107,6 +116,10 @@ Record where important decisions or facts live.
 - Architecture decisions: `docs/adr/`
 - Issue tracking: `.scratch/<feature>/`
 - Repo workflow conventions: `AGENTS.md`
+- Agent workflow conventions: `docs/agents/`
+- User documentation: `README.md`
+- Release checklist: `docs/release-checklist.md`
+- Local testing guide: `docs/testing/local-dev.md`
 - Vendor/platform behavior: Zed MCP docs and Atlassian Rovo MCP documentation
 
 ## Constraints
@@ -116,17 +129,11 @@ Record where important decisions or facts live.
 - User actions must respect existing Atlassian permissions and security controls.
 - Secrets and tokens should not be committed to the repo.
 - The repo should prefer thin integration code/config over duplicating vendor functionality.
-- Because the project is at scaffolding stage, architectural decisions should remain reversible until implementation pressure makes them concrete.
 
 ## Open questions
 
-- What is the exact installation experience the project wants to optimize first: local development, internal team rollout, or public extension distribution?
-- When the project is ready for wider distribution, should the bridge dependency be pinned to a tested `mcp-remote` version instead of using `@latest`?
 - Should a direct remote-MCP connection path be supported later, in addition to the bridge-based default?
-
-
 - How should connection health, authentication failures, and permission-related errors be surfaced to the user?
-- Does this project intend to ship code, documentation, or both?
 
 ## Change log
 
@@ -137,3 +144,7 @@ Record where important decisions or facts live.
 - 2026-05-28: Recorded the V1 support scope in `docs/adr/0003-v1-scope.md`: Jira and Confluence are the primary supported workflows for the first release, while other Rovo-exposed Atlassian products remain best-effort.
 - 2026-05-28: Recorded the authentication strategy in `docs/adr/0004-auth-strategy.md`: V1 treats Atlassian-managed OAuth 2.1 as the primary supported auth path, while API-token-based auth remains an advanced compatibility option rather than a first-class extension feature.
 - 2026-05-28: Recorded the V1 release-validation bar in `docs/adr/0005-release-validation.md`: releases are gated by smoke tests covering extension install, bridge startup, OAuth setup, and one Jira plus one Confluence workflow.
+- 2026-05-29: Added user-facing documentation: `README.md` with prerequisites and configuration example, `docs/release-checklist.md` with the v0.1.0 smoke-test checklist, `docs/testing/local-dev.md` as a step-by-step companion, and `docs/agents/` with agent workflow conventions.
+- 2026-05-29: Added Apache-2.0 license.
+- 2026-05-29: Set up CI/CD with release-please (automated changelog/versioning) and a publish workflow that triggers on tag pushes; added Dependabot for Cargo and GitHub Actions dependencies.
+- 2026-05-29: Released v0.1.0 — extension compiles to wasm32-wasip2, WASM artifact packaged, and extension published to the Zed extension marketplace.
