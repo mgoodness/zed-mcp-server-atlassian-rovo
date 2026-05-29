@@ -9,3 +9,6 @@ node_modules/
 
 # macOS Finder metadata
 .DS_Store
+
+# Test artifacts
+wasip2-test.wasm
