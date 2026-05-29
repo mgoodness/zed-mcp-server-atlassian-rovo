@@ -1,2 +1,11 @@
+# Rust build output
 target/
+
+# Extension-local bridge install
+node_modules/
+
+# Local scratch / issue-tracking workspace
+.scratch/
+
+# macOS Finder metadata
 .DS_Store
