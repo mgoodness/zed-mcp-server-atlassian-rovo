@@ -1,6 +1,7 @@
 on:
-  release:
-    types: [published] # Triggers only when a release is successfully published
+  push:
+    tags:
+      - "v*"
 
 jobs:
   publish:
