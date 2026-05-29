@@ -85,3 +85,7 @@ If authentication fails, restart the flow and check that Node.js is available to
 For browser-launch problems, inspect the `mcp-remote` debug logs in `~/.mcp-auth/*_debug.log`. They include the authorization URL and any browser-open failure details.
 
 If the bridge package is not yet installed, the first run may spend a few seconds installing `mcp-remote` into the extension's local `node_modules` before the context server starts.
+
+## License
+
+Apache-2.0. See `LICENSE`.
